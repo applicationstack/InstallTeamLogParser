@@ -17,25 +17,31 @@ class compareKnownissues():
 		keywordColumn = sheet.col(0)
 
 		for line in ErrorArray :
-		#it is printing everything multiple times to unknownErrors now
+        #it is printing everything multiple times to unknownErrors now
+			hit = False
 			for i in keywordColumn :
-				value = i.value
-				if value in line :
-					knownerrorsTXT.write(line)
-					knownerrorsTXT.write("\n")
-				elif not line.__contains__(value) :
-					unknownerrorsTXT.write(line)
-					unknownerrorsTXT.write("\n")
+					value = i.value
+					if value in line :
+						hit = True
+					elif not line.__contains__(value) :
+						pass
+			if hit :
+				knownerrorsTXT.write(line)
+				knownerrorsTXT.write("\n")
+			else :
+				unknownerrorsTXT.write(line)
+				unknownerrorsTXT.write("\n")
 		knownerrorsTXT.close()
 		unknownerrorsTXT.close()
+		
 
 #Grab location of setupengine and Known Install Log Issues files
-#setupengine = 'C:\Users\I841251\Desktop\logparser\setupengineKnownErrors.log'
-setupengine = 'C:\Users\I841251\Desktop\logparser\setupengineUnknownErrors.log'
+setupengine = 'C:\Users\I841251\Desktop\logparser\setupengineKnownErrors.log'
+#setupengine = 'C:\Users\I841251\Desktop\logparser\setupengineUnknownErrors.log'
 #TODO: need to make it so that Excel sheet is accessed from \\vanhome.van.sap.corp\automation\install\Automation_Results
 Known_Install_log_Issues = 'C:\Users\I841251\Desktop\logparser\Known_Install_log_Issues_.xlsx'
 
-#Read setupengine log and search for 'error:' tag, add all errors to an array to use for comparison
+#ErrorArray = all errors read from setupengine.log
 ErrorArray = []
 
 with open(setupengine, 'r') as lines:
