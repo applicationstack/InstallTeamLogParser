@@ -10,26 +10,32 @@ class compareKnownissues():
 		workbook = xlrd.open_workbook(Known_Install_log_Issues)
 		sheet = workbook.sheet_by_index(0)
 		data = [sheet.cell_value(row, 0)for row in range(sheet.nrows)]
-		#Filepaths changed between Windows and Mac computers
-		knownerrorsTXT = open('C:\Users\I841251\Desktop\logparser\KnownErrors.txt', 'w')
-		unknownerrorsTXT = open('C:\Users\I841251\Desktop\logparser\UnknownErrors.txt', 'w')
+		#txt files read if already on computer, created if not
+		knownerrorsTXT = open('KnownErrors.txt', 'w')
+		unknownerrorsTXT = open('UnknownErrors.txt', 'w')
+		#get Keyword column from Excel sheet
+		keywordColumn = sheet.col(0)
 
 		for line in ErrorArray :
-			if line in set(data) :
-				knownerrorsTXT.truncate()
-				knownerrorsTXT.write(line)
-				knownerrorsTXT.write("\n")
-			else:
-				unknownerrorsTXT.truncate()
-				unknownerrorsTXT.write(line)
-				unknownerrorsTXT.write("\n")
+		#it is matching to both known errors and unknown for some reason...
+			for i in keywordColumn :
+				value = i.value
+				print value
+				if value in line :
+					knownerrorsTXT.write(line)
+					knownerrorsTXT.write("\n")
+				elif value not in line :
+					unknownerrorsTXT.write(line)
+					unknownerrorsTXT.write("\n")
 		knownerrorsTXT.close()
 		unknownerrorsTXT.close()
 
-#On Windows, it's easier to use input as opposed to raw_input on Mac
-setupengine = input('Please input the filepath of a setupengine.log file: ')
-Known_Install_log_Issues = input('Please input the filepath of Known_Install_log_Issues_.xlsx: ')
+#Grab location of setupengine and Known Install Log Issues files
+setupengine = 'C:\Users\I841251\Desktop\logparser\setupengineKnownErrors.log'
+#TODO: need to make it so that Excel sheet is accessed from \\vanhome.van.sap.corp\automation\install\Automation_Results
+Known_Install_log_Issues = 'C:\Users\I841251\Desktop\logparser\Known_Install_log_Issues_.xlsx'
 
+#Read setupengine log and search for 'error:' tag, add all errors to an array to use for comparison
 ErrorArray = []
 
 with open(setupengine, 'r') as lines:
@@ -37,14 +43,15 @@ with open(setupengine, 'r') as lines:
 	for line in lines:
 		if re.match("(.*)(E|e)rror:(.*)", line):
 			ErrorArray.append(line)
-		#	ErrorArray.append("\n")
 		else:
 			pass
 
+#Actual comparison and results
 x = compareKnownissues(ErrorArray, Known_Install_log_Issues)
 y = x.compare()
 print y
 print ErrorArray
+
 
 #Absolute paths on Risa's home computer (Mac)
 #/Users/risanewyear-ramirez/Desktop/LogParserWorkTermProject/logparser/setupengineKnownErrors.log
