@@ -15,7 +15,7 @@ class compareKnownissues():
 		unknownerrorsTXT = open('UnknownErrors.txt', 'w')
 		#get Keyword column from Excel sheet
 		keywordColumn = sheet.col(0)
-
+		
 		for line in ErrorArray :
         #it is printing everything multiple times to unknownErrors now
 			hit = False
@@ -36,22 +36,36 @@ class compareKnownissues():
 		
 
 #Grab location of setupengine and Known Install Log Issues files
-setupengine = 'C:\Users\I841251\Desktop\logparser\setupengineKnownErrors.log'
-#setupengine = 'C:\Users\I841251\Desktop\logparser\setupengineUnknownErrors.log'
+#setupengine = 'setupengineKnownErrors.log'
+setupengine = 'setupengineUnknownErrors.log'
 #TODO: need to make it so that Excel sheet is accessed from \\vanhome.van.sap.corp\automation\install\Automation_Results
-Known_Install_log_Issues = 'C:\Users\I841251\Desktop\logparser\Known_Install_log_Issues_.xlsx'
+Known_Install_log_Issues = 'Known_Install_log_Issues_.xlsx'
 
 #ErrorArray = all errors read from setupengine.log
 ErrorArray = []
+ErrorDescription= []
+unknownerrorsDescription = open('UnknownErrorsDescription.txt', 'w')
 
 with open(setupengine, 'r') as lines:
 	lines = lines.readlines()
+	lineBefore = ""
+	lineAfter = ""
+	index = 0
+	Description = ''
+	
 	for line in lines:
 		if re.match("(.*)(E|e)rror:(.*)", line):
+			index = lines.index(line)
+			lineBefore = lines[index-1]
+			lineAfter = lines[index+1]
+			ErrorDescription.append(lineBefore)
+			ErrorDescription.append(line)
+			ErrorDescription.append(lineAfter)
 			ErrorArray.append(line)
 		else:
 			pass
-
+	Description = ''.join(ErrorDescription)
+	unknownerrorsDescription.write(Description)
 #Actual comparison and results
 x = compareKnownissues(ErrorArray, Known_Install_log_Issues)
 x.compare()

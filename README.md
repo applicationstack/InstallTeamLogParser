@@ -23,6 +23,10 @@ What is included with this project
 
 The project will also require a setupengine.log to be in the same directory.
 
+The python add-on wxpython (http://www.wxpython.org/) will need to be downloaded for ErrorReportingGUI.py to work.
+
+Python 2.7 or later is required to run wxpython.
+
 Using the setupengine parser to create steps and Lumira Visualization (from Salman Tariq's documentation)
 ----------------------------------------------------------------------------------------------------------
 The StepParser.py python class is responsible for opening the steps.txt file, parsing the steps listed and using them to get the minutes needed to
@@ -65,3 +69,25 @@ or an Unknown Errors text file depending on whether the error matches keywords i
 The script looks for the setupengine.log and Known_Errors_log_Issues.xlsx in the same directory as the project.
 If text files for Known Errors and Unknown Errors are not present in the same directory, they are created when the script is run for the first time.
 
+You can run the script from the command line by typing:
+
+python compareIssues.py
+
+The script parses the setupengine.log file and saves any lines that contain 'error:' or 'Error:' to ErrorArray. Then it parses Known_Errors_log_Issues.xlsx for the strings in the
+keyword column of the document and saves them to a variable called keywordColumn. During the compare() method, the values in ErrorArray are cross-referenced with the values in
+keywordColumn. If any matching strings are found, the line in which it was found is written to KnownErrors.txt. If no matching strings are found, the lines that are left are written
+to UnknownErrors.txt. The script then returns ErrorArray.
+
+In order to view the known and unknown errors more clearly, you can open up the Error Reporting Tool in the command line by typing:
+
+pythonw ErrorReportingToolGUI.py
+
+or if your Python 2.7 update is located in a different folder:
+
+C:\Python27\python.exe ErrorReportingToolGUI.py
+
+The GUI displays the known errors in a text box on the left hand side of the pop-up window. Note that the errors cannot be selected or manipulated in any way. The unknown errors are 
+displayed in a listbox on the right side of the window. The unknown errors can be selected from the box.
+
+There is a 'Report to JIRA' button that, if pressed, opens up the JIRA homepage in a browser. This is intended for users of the tool to report any unknown errors that are ship killers
+to a product or causing a BAT test case to fail to be reported to JIRA.

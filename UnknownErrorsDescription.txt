@@ -1,0 +1,21 @@
+15:33:46.003 Checking Unix directory permissions
+15:33:46.069 Error: No property enclosed in raw argument brackets: []
+15:33:46.069 [ValidateCheckInvalidSymbol]EscapeCharacterList:  "&'<>@\|()[]{}^$*+?.`~!#%=;:,
+17:48:10.460 ===   END: "/build/taffi/aurora/sap_bobj/lcm_installer.sh" "********" 2>&1
+17:48:10.461 Error:  Command execution failed. Giving up.
+17:48:10.464 Error: *** Action failed.
+17:48:10.461 Error:  Command execution failed. Giving up.
+17:48:10.464 Error: *** Action failed.
+17:48:10.465 SilentProgressMonitor->Worked: 2 more units on task: Installing Version Configuration
+17:52:56.704 Working directory: /build/taffi/aurora/InstallData/logs/2014.07.15.15.33.43
+18:15:09.169 err: Tue Jul 15 18:05:00 PDT 2014 Error: Couldn't refresh report properties: Order Processing Efficiency Dashboard
+Error description: Adding Crystal Report "Order Processing Efficiency Dashboard.rpt" failed. The server with kind rptappserver returned an error result. Failed to copy the report file to the report object. Refreshing the report object properties might have failed. Failed to read data from report file Order Processing Efficiency Dashboard. Reason: Failed to read parameter object
+Error description: Adding Crystal Report "Order Processing Efficiency Dashboard.rpt" failed. The server with kind rptappserver returned an error result. Failed to copy the report file to the report object. Refreshing the report object properties might have failed. Failed to read data from report file Order Processing Efficiency Dashboard. Reason: Failed to read parameter object
+err: Tue Jul 15 18:15:08 PDT 2014 Error: 
+Error description: The property with ID SI_LOGON_INFO does not exist in the object (FWM 02021)
+18:15:52.602 P-Resolver: No declarations found for property: UsingSystemInstall
+18:15:52.602 Error: ProductSequence <0, 6, 0>
+18:15:52.602 Error:   Could not resolve property at product scope: usingsysteminstall
+18:15:52.602 Error: ProductSequence <0, 6, 0>
+18:15:52.602 Error:   Could not resolve property at product scope: usingsysteminstall
+18:15:52.606 *** END CHECKING PRODUCT SEQUENCE ***
